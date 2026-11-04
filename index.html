@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday Anushree</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #fff8f1;
+      --gold: #e8b86d;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      background: #140810;
+      color: var(--cream);
+      font-family: "Outfit", system-ui, sans-serif;
+    }
+
+    body { overflow-x: hidden; overflow-y: auto; }
+
+    .sky {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(900px 520px at 15% -10%, rgba(255, 143, 171, 0.35), transparent 60%),
+        radial-gradient(700px 480px at 100% 10%, rgba(232, 184, 109, 0.22), transparent 55%),
+        radial-gradient(800px 600px at 50% 120%, rgba(120, 40, 80, 0.55), transparent 60%),
+        linear-gradient(165deg, #2a1020 0%, #140810 48%, #1c0c16 100%);
+    }
+
+    .sky::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1.5px 1.5px at 20% 30%, rgba(255,248,241,.7) 50%, transparent 51%),
+        radial-gradient(1.2px 1.2px at 70% 20%, rgba(255,248,241,.55) 50%, transparent 51%),
+        radial-gradient(1px 1px at 40% 70%, rgba(255,248,241,.45) 50%, transparent 51%),
+        radial-gradient(1.4px 1.4px at 85% 65%, rgba(255,248,241,.5) 50%, transparent 51%),
+        radial-gradient(1px 1px at 10% 80%, rgba(255,248,241,.4) 50%, transparent 51%);
+      animation: twinkle 4.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: .55; }
+      50% { opacity: 1; }
+    }
+
+    canvas#confetti {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .stage {
+      position: relative;
+      z-index: 2;
+      min-height: 100dvh;
+      display: flex;
+      align-items: safe center;
+      justify-content: center;
+      padding: 36px 18px 56px;
+    }
+
+    .card {
+      width: min(560px, 100%);
+      text-align: center;
+      position: relative;
+    }
+
+    .gate, .wish {
+      transition: opacity .55s ease, transform .7s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .gate.is-gone {
+      opacity: 0;
+      transform: translateY(-18px) scale(.98);
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+    }
+
+    .wish {
+      opacity: 0;
+      transform: translateY(22px);
+      pointer-events: none;
+    }
+
+    .wish.is-on {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+
+    .eyebrow {
+      letter-spacing: .42em;
+      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    h1.invite {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(36px, 7vw, 58px);
+      line-height: 1.05;
+    }
+
+    h1.invite em {
+      font-style: italic;
+      color: #ffd6e0;
+    }
+
+    .sub {
+      margin: 16px auto 0;
+      max-width: 34ch;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255, 248, 241, .78);
+    }
+
+    .mini {
+      width: 150px;
+      margin: 32px auto 6px;
+      filter: drop-shadow(0 18px 24px rgba(0,0,0,.35));
+      animation: floaty 3.4s ease-in-out infinite;
+    }
+
+    .mini-top {
+      height: 16px;
+      border-radius: 8px 8px 0 0;
+      background: linear-gradient(180deg, #a85a72, #6e3146);
+    }
+
+    .mini-front {
+      height: 78px;
+      border-radius: 4px 4px 12px 12px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.18), transparent 28%),
+        linear-gradient(180deg, #c46b86, #8a3d58 55%, #5c283c);
+      box-shadow: inset 0 0 0 1px rgba(255, 214, 224, .2);
+      display: grid;
+      place-items: center;
+    }
+
+    .mini-front span {
+      width: 46px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ffe7b0, #c9963e);
+      box-shadow: 0 2px 0 #8a6424;
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .click {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      margin-top: 28px;
+      padding: 16px 42px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 15px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #2a1420;
+      background: linear-gradient(180deg, #ffe7b0, #e8b86d 55%, #d39a45);
+      box-shadow:
+        0 0 0 1px rgba(255, 236, 190, .4),
+        0 14px 30px rgba(232, 184, 109, .28);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .click:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow:
+        0 0 0 1px rgba(255, 236, 190, .6),
+        0 18px 36px rgba(232, 184, 109, .4);
+    }
+
+    .click:focus-visible,
+    .sweet:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 4px;
+    }
+
+    .hint {
+      margin-top: 14px;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255, 248, 241, .45);
+    }
+
+    .script {
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(58px, 11vw, 96px);
+      line-height: .9;
+      background: linear-gradient(180deg, #fff6e4 10%, #ffd0dc 45%, #e8b86d 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.25));
+    }
+
+    .name {
+      margin-top: 4px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(26px, 5vw, 40px);
+      letter-spacing: .08em;
+    }
+
+    .enjoy {
+      margin: 12px auto 0;
+      font-weight: 300;
+      font-size: 16px;
+      letter-spacing: .04em;
+      color: rgba(255, 248, 241, .82);
+    }
+
+    .unit {
+      position: relative;
+      width: min(440px, 100%);
+      height: 214px;
+      margin: 18px auto 0;
+      transition: height .95s cubic-bezier(.22, .9, .24, 1);
+    }
+
+    .unit.open { height: 400px; }
+
+    .wood-top,
+    .wood-base {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 22px;
+      background: linear-gradient(180deg, #a85a72, #6d3148);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.25);
+    }
+
+    .wood-top { top: 0; border-radius: 12px 12px 4px 4px; z-index: 5; }
+    .wood-base { bottom: 0; border-radius: 4px 4px 14px 14px; z-index: 1; }
+
+    .cavity {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      top: 22px;
+      height: 188px;
+      background:
+        radial-gradient(120px 40px at 50% 0%, rgba(255, 200, 140, .12), transparent 70%),
+        linear-gradient(180deg, #3a2018, #24140f 70%);
+      border-radius: 0 0 16px 16px;
+      box-shadow: inset 0 16px 24px rgba(0,0,0,.45);
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .sweets {
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 72px);
+      justify-content: center;
+      align-content: center;
+      gap: 6px 10px;
+      padding: 8px 10px 12px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .55s ease .25s, transform .6s ease .25s;
+    }
+
+    .unit.open .sweets {
+      opacity: 1;
+      transform: none;
+    }
+
+    .sweet {
+      width: 64px;
+      height: 70px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: transform .2s ease;
+    }
+
+    .sweet:hover { transform: translateY(-4px) scale(1.06); }
+
+    .sweet.eaten {
+      animation: nom .65s ease forwards;
+      pointer-events: none;
+    }
+
+    @keyframes nom {
+      40% { transform: translateY(-26px) scale(1.12); }
+      100% { transform: translateY(-8px) scale(0); opacity: 0; }
+    }
+
+    .laddu, .jamun, .rasgulla, .barfi, .choco, .jalebi {
+      position: relative;
+      display: block;
+    }
+
+    .laddu, .jamun, .rasgulla {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+    }
+
+    .laddu {
+      background: radial-gradient(circle at 34% 30%, #ffe7a3, #f0a202 52%, #c47b00);
+      box-shadow: inset -5px -7px 0 rgba(120, 60, 0, .18), 0 8px 10px rgba(0,0,0,.25);
+    }
+
+    .laddu::after {
+      content: "";
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 236, 180, .7);
+      transform: translate(-8px, -6px);
+    }
+
+    .jamun {
+      background: radial-gradient(circle at 34% 28%, #c48468, #6a2e1e 58%, #3a140e);
+      box-shadow: inset -4px -6px 0 rgba(0,0,0,.25), 0 8px 10px rgba(0,0,0,.28);
+    }
+
+    .rasgulla {
+      background: radial-gradient(circle at 34% 30%, #ffffff, #f4e7ea 60%, #e7d0d6);
+      box-shadow: inset -4px -6px 0 rgba(180, 120, 140, .25), 0 8px 10px rgba(0,0,0,.2);
+    }
+
+    .barfi {
+      width: 42px;
+      height: 42px;
+      border-radius: 6px;
+      background: linear-gradient(145deg, #ffe0ea, #ff8fab 55%, #e56b8a);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.35), 0 8px 10px rgba(0,0,0,.22);
+      transform: rotate(8deg);
+    }
+
+    .sweet:hover .barfi { transform: rotate(8deg); }
+
+    .choco {
+      width: 36px;
+      height: 48px;
+      border-radius: 5px;
+      background: linear-gradient(180deg, #7a4634, #3e2218);
+      box-shadow: inset 0 8px 0 rgba(255, 190, 140, .18), 0 8px 10px rgba(0,0,0,.28);
+      position: relative;
+    }
+
+    .choco::before,
+    .choco::after {
+      content: "";
+      position: absolute;
+      left: 6px;
+      right: 6px;
+      height: 2px;
+      background: rgba(255, 214, 170, .55);
+    }
+
+    .choco::before { top: 16px; }
+    .choco::after { top: 30px; }
+
+    .jalebi {
+      width: 52px;
+      height: 52px;
+      filter: drop-shadow(0 8px 8px rgba(0,0,0,.25));
+    }
+
+    .drawer-front {
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      top: 20px;
+      height: 168px;
+      border-radius: 8px 8px 16px 16px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.2), transparent 26%),
+        linear-gradient(180deg, #d17b96, #9a4664 42%, #6a2d44);
+      box-shadow:
+        0 16px 24px rgba(0,0,0,.28),
+        inset 0 0 0 1px rgba(255, 220, 228, .28);
+      z-index: 4;
+      display: grid;
+      place-items: center;
+      transition: transform .95s cubic-bezier(.22, .9, .24, 1);
+    }
+
+    .unit.open .drawer-front {
+      transform: translateY(192px);
+    }
+
+    .inlay {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 22px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 231, 176, .8), transparent);
+    }
+
+    .knob {
+      width: 58px;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ffe7b0, #d7a24a 55%, #a9782c);
+      box-shadow: 0 3px 0 #7a5a22, 0 8px 12px rgba(0,0,0,.25);
+    }
+
+    .nibble {
+      min-height: 1.4em;
+      margin-top: 8px;
+      font-size: 14px;
+      letter-spacing: .04em;
+      color: #ffd6a5;
+    }
+
+    .message {
+      max-width: 40ch;
+      margin: 14px auto 0;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(255, 248, 241, .86);
+    }
+
+    .balloons {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity .8s ease;
+    }
+
+    .balloons.show { opacity: 1; }
+
+    .balloon {
+      position: absolute;
+      bottom: -140px;
+      width: 54px;
+      height: 68px;
+      border-radius: 50% 50% 50% 50% / 45% 45% 55% 55%;
+      animation: rise linear infinite;
+    }
+
+    .balloon::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -46px;
+      width: 1px;
+      height: 48px;
+      background: rgba(255,248,241,.45);
+      transform: translateX(-50%);
+    }
+
+    .balloon::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -6px;
+      width: 8px;
+      height: 8px;
+      background: inherit;
+      clip-path: polygon(50% 100%, 0 0, 100% 0);
+      transform: translateX(-50%);
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) rotate(-4deg); }
+      100% { transform: translateY(-120vh) rotate(6deg); }
+    }
+
+    .b1 { left: 8%; background: #ff8fab; animation-duration: 14s; animation-delay: .2s; }
+    .b2 { left: 18%; background: #e8b86d; width: 42px; height: 54px; animation-duration: 17s; animation-delay: 2s; }
+    .b3 { left: 78%; background: #f3c1d0; animation-duration: 15s; animation-delay: .8s; }
+    .b4 { left: 88%; background: #c45c7a; width: 46px; height: 58px; animation-duration: 18s; animation-delay: 3.2s; }
+    .b5 { left: 48%; background: #ffd6a5; width: 36px; height: 46px; animation-duration: 16s; animation-delay: 1.4s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mini, .sky::after, .balloon { animation: none; }
+      .gate, .wish, .drawer-front, .sweets, .sweet, .unit { transition: none; }
+      .sweet.eaten { animation: none; opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+  <div class="balloons" id="balloons" aria-hidden="true">
+    <span class="balloon b1"></span>
+    <span class="balloon b2"></span>
+    <span class="balloon b3"></span>
+    <span class="balloon b4"></span>
+    <span class="balloon b5"></span>
+  </div>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <main class="stage">
+    <div class="card">
+      <section class="gate" id="gate">
+        <p class="eyebrow">A little surprise</p>
+        <h1 class="invite">Something sweet<br /><em>is waiting</em></h1>
+        <p class="sub">A drawer little bit of sweets, kept just for you.</p>
+        <div class="mini" aria-hidden="true">
+          <div class="mini-top"></div>
+          <div class="mini-front"><span></span></div>
+        </div>
+        <button class="click" id="open" type="button">Click here</button>
+        <p class="hint">Open the drawer</p>
+      </section>
+
+      <section class="wish" id="wish" hidden>
+        <p class="eyebrow">For you</p>
+        <p class="script">Happy Birthday</p>
+        <h1 class="name">Anushree</h1>
+        <p class="enjoy">The drawer is open. Enjoy the sweets.</p>
+
+        <div class="unit" id="unit">
+          <div class="wood-top"></div>
+          <div class="cavity">
+            <div class="sweets" id="sweets">
+              <button class="sweet" type="button" data-note="A golden laddu. Enjoy every bite." aria-label="Enjoy a laddu">
+                <span class="laddu"></span>
+              </button>
+              <button class="sweet" type="button" data-note="Gulab jamun, soaked in sweetness." aria-label="Enjoy a gulab jamun">
+                <span class="jamun"></span>
+              </button>
+              <button class="sweet" type="button" data-note="Pink barfi, soft and pretty." aria-label="Enjoy a barfi">
+                <span class="barfi"></span>
+              </button>
+              <button class="sweet" type="button" data-note="A cloud of rasgulla, just for you." aria-label="Enjoy a rasgulla">
+                <span class="rasgulla"></span>
+              </button>
+              <button class="sweet" type="button" data-note="Chocolate, because you deserve extra." aria-label="Enjoy a chocolate">
+                <span class="choco"></span>
+              </button>
+              <button class="sweet" type="button" data-note="Crisp jalebi, warm and bright." aria-label="Enjoy a jalebi">
+                <svg class="jalebi" viewBox="12 16 36 40" aria-hidden="true">
+                  <path d="M16 36c1-12 12-18 20-12 9 6 8 18 0 22-10 6-20 1-22-8-2-9 6-16 14-15 9 1 13 10 8 16-6 8-16 6-20 0" fill="none" stroke="#ff9f1c" stroke-width="7" stroke-linecap="round"/>
+                  <path d="M24 30c3-5 10-6 13-2" fill="none" stroke="#ffe08a" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="drawer-front" aria-hidden="true">
+            <span class="inlay"></span>
+            <span class="knob"></span>
+          </div>
+          <div class="wood-base"></div>
+        </div>
+
+        <p class="nibble" id="nibble" aria-live="polite">Tap a sweet and enjoy.</p>
+        <p class="message">
+          May this year be as sweet as what you find in this drawer.
+          Warm, generous, and entirely yours.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const openBtn = document.getElementById("open");
+    const gate = document.getElementById("gate");
+    const wish = document.getElementById("wish");
+    const unit = document.getElementById("unit");
+    const balloons = document.getElementById("balloons");
+    const nibble = document.getElementById("nibble");
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    const colors = ["#ff8fab", "#e8b86d", "#fff6e4", "#ffd6a5", "#f3c1d0", "#ffb703", "#ffffff"];
+    let pieces = [];
+    let running = false;
+
+    function burstAt(x, y, count) {
+      pieces = pieces.concat(Array.from({ length: count }, () => {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 3 + Math.random() * 7;
+        return {
+          x: x,
+          y: y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 3,
+          w: 5 + Math.random() * 6,
+          h: 7 + Math.random() * 7,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rot: Math.random() * Math.PI,
+          vr: (Math.random() - 0.5) * 0.3,
+          life: 1
+        };
+      }));
+      if (!running) {
+        running = true;
+        tick();
+      }
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach((p) => {
+        p.vy += 0.12;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx *= 0.99;
+        p.rot += p.vr;
+        p.life -= 0.006;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.globalAlpha = Math.max(p.life, 0);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      });
+      pieces = pieces.filter((p) => p.life > 0 && p.y < canvas.height + 40);
+      if (pieces.length) requestAnimationFrame(tick);
+      else {
+        running = false;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    function reveal() {
+      openBtn.disabled = true;
+      gate.classList.add("is-gone");
+      wish.hidden = false;
+      requestAnimationFrame(() => wish.classList.add("is-on"));
+      const openDrawer = () => {
+        unit.classList.add("open");
+        balloons.classList.add("show");
+        const box = unit.getBoundingClientRect();
+        burstAt(box.left + box.width / 2, box.top + 40, 90);
+      };
+      if (reduce) openDrawer();
+      else setTimeout(openDrawer, 420);
+    }
+
+    document.getElementById("sweets").addEventListener("click", (event) => {
+      const btn = event.target.closest(".sweet");
+      if (!btn || btn.classList.contains("eaten") || !unit.classList.contains("open")) return;
+      btn.classList.add("eaten");
+      nibble.textContent = btn.dataset.note;
+      const rect = btn.getBoundingClientRect();
+      burstAt(rect.left + rect.width / 2, rect.top + 10, 24);
+      const left = document.querySelectorAll(".sweet:not(.eaten)").length;
+      if (left === 0) {
+        setTimeout(() => {
+          nibble.textContent = "Every sweet was yours. Happy birthday, Anushree.";
+        }, reduce ? 0 : 700);
+      }
+    });
+
+    openBtn.addEventListener("click", reveal);
+  </script>
+</body>
+</html>
